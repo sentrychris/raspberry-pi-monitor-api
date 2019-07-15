@@ -2,7 +2,6 @@ import os
 import platform
 import psutil
 import datetime
-import pprint
 
 # Get system information
 def get_system_info():
