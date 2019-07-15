@@ -1,13 +1,12 @@
-from flask import Flask, json, jsonify, render_template
+from flask import Flask, jsonify, render_template
 import mon
-import requests
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
     response = app.response_class(
-        response = "pi monitor API...",
+        response = "Pi monitor service is running :)",
         status=200,
         mimetype='text/plain'
     )
