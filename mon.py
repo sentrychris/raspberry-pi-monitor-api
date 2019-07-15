@@ -1,4 +1,5 @@
 import os
+import platform
 import psutil
 import datetime
 import pprint
@@ -9,6 +10,7 @@ def get_system_info():
     info["cpu"] = get_cpu_info()
     info["disk"] = get_disk_info()
     info["uptime"] = get_system_uptime()
+    info["platform"] = get_platform_info()
 
     info["processes"] = []
     processes = get_processes()
@@ -17,10 +19,16 @@ def get_system_info():
 
     return info
 
+def get_platform_info():
+    info = {}
+    info["distro"] = os.popen('cat /etc/*-release | awk NR==1 | cut -c 13-').read().replace('"', '').rstrip()
+    info["kernel"] = platform.release()
+
+    return info
+
 # Get system uptime
 def get_system_uptime():
     info = {}
-
     try:
         f = open( "/proc/uptime" )
         contents = f.read().split()
