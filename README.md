@@ -2,9 +2,9 @@
 
 A mini-API for monitoring your raspberry Pi.
 
-## How it works?
+## How it Works
 
-It currently only has one endpoint ```http://api.raspberrypi.local/monitor``` which returns the following:
+It only has one endpoint `http://api.raspberrypi.local/monitor` which returns the following:
 
 ```json
 {
@@ -93,6 +93,7 @@ It currently only has one endpoint ```http://api.raspberrypi.local/monitor``` wh
 }
 ```
 
+### The Data
 ```
 cpu:
     - freq: Current clock speed
@@ -105,7 +106,7 @@ disk:
     - total: Total disk space (GB)
     - used: Used disk space (GB)
     
- processes:
+ processes (top 10 processes sorted by memory usage):
     - name: Process name
     - pid: Process ID
     - user: Process owner
@@ -114,7 +115,37 @@ uptime:
     - uptime: system uptime in days, hours, minutes and seconds
 ```
 
+## Apache Configuration
+Firstly, make sure you have `libapache2-mod-wsgi` installed:
+
+```bash
+$ sudo apt install libapache2-mod-wsgi
+```
+
+Then create and enable your new virtualhost configuration:
+
+```conf
+<VirtualHost *>
+    ServerName api.raspberrypi.local
+
+    WSGIDaemonProcess application user=pi group=pi threads=5
+    WSGIScriptAlias / /var/www/flaskapps/pymonitorapi/pymonitorapi.wsgi
+
+    <Directory /var/www/flaskapps/pymonitorapi>
+        WSGIProcessGroup application
+        WSGIApplicationGroup %{GLOBAL}
+        Order deny,allow
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+
+```bash
+$ sudo a2ensite api.raspberrypi.local.conf
+$ sudo systemctl reload apache2
+```
+
 It will always return data in JSON format, you can then parse it with whatever library/language you're using and use it to
 display information about your Pi.
  
- A working example client can be downloaded from [here](https://github.com/cversyx/py-monitor).
+A working example client can be downloaded from [here](https://github.com/cversyx/py-monitor).
