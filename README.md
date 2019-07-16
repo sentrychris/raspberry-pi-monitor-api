@@ -177,9 +177,9 @@ class Monitor
 }
  ```
  
- ```monitor.twig```html
+ ```monitor.twig```
  
- ```
+ ```html
  <!DOCTYPE html>
 <html lang="en">
 <head>
