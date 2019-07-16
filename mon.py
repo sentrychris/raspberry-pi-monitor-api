@@ -2,7 +2,6 @@ import os
 import platform
 import psutil
 import datetime
-import pprint
 
 # Get system information
 def get_system_info():
@@ -14,7 +13,7 @@ def get_system_info():
 
     info["processes"] = []
     processes = get_processes()
-    for process in processes[:5] :
+    for process in processes[:10]:
         info["processes"].append((process))
 
     return info
@@ -29,7 +28,6 @@ def get_platform_info():
 # Get system uptime
 def get_system_uptime():
     info = {}
-
     try:
         f = open( "/proc/uptime" )
         contents = f.read().split()
@@ -89,4 +87,3 @@ def get_processes():
     processes = sorted(processes, key=lambda procObj: procObj['vms'], reverse=True)
 
     return processes
-
