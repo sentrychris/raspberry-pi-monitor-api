@@ -93,6 +93,9 @@ It only has one endpoint `http://api.raspberrypi.local/monitor` which returns th
 }
 ```
 
+It will always return data in JSON format, you can then parse it with whatever library/language you're using and use it to
+display information about your Pi.
+
 ### The Data
 ```
 cpu:
@@ -144,8 +147,5 @@ Then create and enable your new virtualhost configuration:
 $ sudo a2ensite api.raspberrypi.local.conf
 $ sudo systemctl reload apache2
 ```
-
-It will always return data in JSON format, you can then parse it with whatever library/language you're using and use it to
-display information about your Pi.
  
 A working example client can be downloaded from [here](https://github.com/cversyx/py-monitor).
