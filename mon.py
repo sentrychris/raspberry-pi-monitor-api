@@ -2,7 +2,6 @@ import os
 import platform
 import psutil
 import datetime
-import pprint
 
 # Get system information
 def get_system_info():
@@ -14,11 +13,12 @@ def get_system_info():
 
     info["processes"] = []
     processes = get_processes()
-    for process in processes[:5] :
+    for process in processes[:10] :
         info["processes"].append((process))
 
     return info
 
+# Get distribution information
 def get_platform_info():
     info = {}
     info["distro"] = os.popen('cat /etc/*-release | awk NR==1 | cut -c 13-').read().replace('"', '').rstrip()
@@ -81,12 +81,20 @@ def get_processes():
     for proc in psutil.process_iter():
         try:
             pinfo = proc.as_dict(attrs=['pid', 'name', 'username'])
-            pinfo['vms'] = proc.memory_info().vms / (1024 * 1024)
+            pinfo['mem'] = proc.memory_info().rss / (1024 * 1024)
             processes.append(pinfo)
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
 
-    processes = sorted(processes, key=lambda procObj: procObj['vms'], reverse=True)
+    processes = sorted(processes, key=lambda procObj: procObj['mem'], reverse=True)
 
     return processes
+
+# Shutdoww
+def shutdown():
+    os.system('sudo shutdown -h now')
+
+# Reboot
+def reboot():
+    os.system('sudo reboot')
 
