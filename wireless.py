@@ -3,6 +3,27 @@ import subprocess
 
 interface = "wlan0"
 
+def get_wifi_info():
+    cells=[[]]
+    parsed_cells=[]
+
+    proc = subprocess.Popen(["iwlist", interface, "scan"], stdout=subprocess.PIPE, universal_newlines=True)
+    out, err = proc.communicate()
+
+    for line in out.split("\n"):
+        cell_line = match(line,"Cell ")
+        if cell_line != None:
+            cells.append([])
+            line = cell_line[-27:]
+        cells[-1].append(line.rstrip())
+        
+    cells=cells[1:]
+
+    for cell in cells:
+        parsed_cells.append(parse_cell(cell))
+
+    return parsed_cells
+
 def get_name(cell):
     return matching_line(cell,"ESSID:")[1:-1]
 
@@ -34,15 +55,6 @@ def get_encryption(cell):
 def get_address(cell):
     return matching_line(cell,"Address: ")
 
-rules = {
-    "name": get_name,
-    "quality": get_quality,
-    "channel": get_channel,
-    "encryption": get_encryption,
-    "address": get_address,
-    "signal": get_signal_level
-}
-
 def matching_line(lines, keyword):
     for line in lines:
         matching=match(line,keyword)
@@ -58,32 +70,19 @@ def match(line,keyword):
     else:
         return
 
+rules = {
+    "name": get_name,
+    "quality": get_quality,
+    "channel": get_channel,
+    "encryption": get_encryption,
+    "address": get_address,
+    "signal": get_signal_level
+}
+
 def parse_cell(cell):
     parsed_cell={}
     for key in rules:
         rule=rules[key]
         parsed_cell.update({key:rule(cell)})
+
     return parsed_cell
-
-def main():
-    cells=[[]]
-    parsed_cells=[]
-
-    proc = subprocess.Popen(["iwlist", interface, "scan"], stdout=subprocess.PIPE, universal_newlines=True)
-    out, err = proc.communicate()
-
-    for line in out.split("\n"):
-        cell_line = match(line,"Cell ")
-        if cell_line != None:
-            cells.append([])
-            line = cell_line[-27:]
-        cells[-1].append(line.rstrip())
-        
-    cells=cells[1:]
-
-    for cell in cells:
-        parsed_cells.append(parse_cell(cell))
-
-    return parsed_cells
-
-print(main())

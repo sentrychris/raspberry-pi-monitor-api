@@ -1,5 +1,4 @@
 import os
-import pwd
 import platform
 import psutil
 import datetime
@@ -91,10 +90,6 @@ def get_processes():
     processes = sorted(processes, key=lambda procObj: procObj['mem'], reverse=True)
 
     return processes
-
-# Get username
-def get_user():
-    return pwd.getpwuid(os.getuid())[0]
 
 # Shutdoww
 def shutdown():

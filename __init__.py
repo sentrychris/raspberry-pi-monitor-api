@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, render_template
 import system
 import network
-import net2
+import wireless
 
 app = Flask(__name__)
 
@@ -9,7 +9,7 @@ app = Flask(__name__)
 def index():
     response = app.response_class(
         response = "Pi monitor service is running :)",
-        status=200,
+        status = 200,
         mimetype='text/plain'
     )
 
@@ -25,17 +25,22 @@ def sysnet():
     data = network.get_network_info()
     return jsonify(data=data)
 
-@app.route('/network/counter', methods=['GET'])
-def streamed_sysnet():
+@app.route('/network/counter/<interface>', methods=['GET'])
+def streamed_sysnet(interface):
     def generate():
-        for response in net2.main():
-            yield response
+        for value  in network.counter(interface):
+            yield value
 
     return app.response_class(
-        response=generate(),
-        status=200,
+        response = generate(),
+        status = 200,
         mimetype='application/json'
     )
+
+@app.route('/network/wireless', methods=['GET'])
+def syswifi():
+    data = wireless.get_wifi_info()
+    return jsonify(data=data)
 
 @app.route('/action/<action>', methods=['POST'])
 def action(action):
@@ -54,5 +59,3 @@ def action(action):
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0')
-
-
