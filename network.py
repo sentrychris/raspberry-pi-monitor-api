@@ -2,19 +2,15 @@ import os
 import subprocess
 import psutil
 import time
+import wireless
 
 def get_network_info():
     info = {}
-    info["ssid"] = get_ssid()
     info["interfaces"] = get_interface_stats()
     info["connections"] = get_connections()
+    info["wifi"] = wireless.get_wifi_info()
 
     return info
-
-def get_ssid():
-    ssid = subprocess.check_output('iwgetid -r', shell=True).decode().rstrip()
-
-    return ssid
 
 def get_interface_stats():
     interfaces = {}
