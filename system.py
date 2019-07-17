@@ -1,4 +1,5 @@
 import os
+import pwd
 import platform
 import psutil
 import datetime
@@ -10,6 +11,7 @@ def get_system_info():
     info["disk"] = get_disk_info()
     info["uptime"] = get_system_uptime()
     info["platform"] = get_platform_info()
+    info["user"] = get_user()
 
     info["processes"] = []
     processes = get_processes()
@@ -89,6 +91,10 @@ def get_processes():
     processes = sorted(processes, key=lambda procObj: procObj['mem'], reverse=True)
 
     return processes
+
+# Get username
+def get_user():
+    return pwd.getpwuid(os.getuid())[0]
 
 # Shutdoww
 def shutdown():

@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, render_template
 import system
 import network
+import net2
 
 app = Flask(__name__)
 
@@ -23,6 +24,18 @@ def sysres():
 def sysnet():
     data = network.get_network_info()
     return jsonify(data=data)
+
+@app.route('/network/counter', methods=['GET'])
+def streamed_sysnet():
+    def generate():
+        for response in net2.main():
+            yield response
+
+    return app.response_class(
+        response=generate(),
+        status=200,
+        mimetype='application/json'
+    )
 
 @app.route('/action/<action>', methods=['POST'])
 def action(action):
