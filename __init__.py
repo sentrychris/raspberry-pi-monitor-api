@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template
-import mon
-import net
+import system
+import network
 
 app = Flask(__name__)
 
@@ -14,22 +14,22 @@ def index():
 
     return response
 
-@app.route('/monitor', methods=['GET'])
-def monitor():
-    data = mon.get_system_info()
+@app.route('/system', methods=['GET'])
+def sysres():
+    data = system.get_system_info()
     return jsonify(data=data)
 
 @app.route('/network', methods=['GET'])
-def network():
-    data = net.get_network_info()
+def sysnet():
+    data = network.get_network_info()
     return jsonify(data=data)
 
-@app.route('/functions/<action>', methods=['POST'])
-def functions(action):
+@app.route('/action/<action>', methods=['POST'])
+def action(action):
     if action is "shutdown":
-        mon.shutdown()
+        system.shutdown()
     elif action is "reboot":
-        mon.reboot()
+        system.reboot()
 
     response = app.response_class(
         response = action + " initiated.",
