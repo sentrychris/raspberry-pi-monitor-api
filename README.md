@@ -4,7 +4,7 @@ A simple API for monitoring your raspberry Pi.
 
 ## How it Works
 
-It's incredibly simple, just submit a GET request to your chosen endpoint to receive data, which will always be return data in JSON format, you can then consume it with whatever library/language you're using and use it to display information about your Pi.
+It's incredibly simple, just submit a GET request to your chosen endpoint to receive data, which will always be returned in JSON format, then you can consume that data with whatever library/language you're using and use it to display information about your Pi.
 
 ## Endpoints
 
