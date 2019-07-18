@@ -1,6 +1,6 @@
 # py-monitor-api
 
-A mini-API for monitoring your raspberry Pi.
+A simple API for monitoring your raspberry Pi.
 
 ## How it Works
 
