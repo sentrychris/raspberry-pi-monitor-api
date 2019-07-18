@@ -28,8 +28,8 @@ def sysnet():
 @app.route('/network/counter/<interface>', methods=['GET'])
 def streamed_sysnet(interface):
     def generate():
-        for value  in network.counter(interface):
-            yield value
+        for stat in network.counter(interface):
+            yield stat
 
     return app.response_class(
         response = generate(),
