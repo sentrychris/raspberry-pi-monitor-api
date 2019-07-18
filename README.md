@@ -8,28 +8,29 @@ It's incredibly simple, just submit a GET request to your chosen endpoint to rec
 
 ## Endpoints
 
-#### `/system`
+#### GET `/system`
 Returns a JSON object containing core system information, including:
 
 - **CPU**: temperature, clock speed (frequency) and system-wide usage as a percentage.
 - **Disk**: total size (GB), used amount (GB), remaining space (GB) and usage as a percentage.
-- **Processes**: top ten processes by memory usage, process information includes name, PID, username and memory (MB)
+- **Processes**: top ten processes by memory usage, process information includes name, PID, username and memory (MB).
 - **Platform**: distribution name and kernel version.
-- **Uptime**: system uptime represented in format "_n_ days, _n_ hours, _n_ minutes and _n_ seconds"
+- **Uptime**: system uptime represented in format "_n_ days, _n_ hours, _n_ minutes and _n_ seconds".
 
 Please refer to the [`system.json`](https://github.com/cversyx/py-monitor/blob/master/tests/system.json) test file for a detailed example.
 
-### `/network`
+### GET `/network`
 Returns a JSON object containing network information, including:
 
 - **connections**: established UNIX socket connections.
-- **interfaces**: network interfaces and send/receive, error and dropout statistics
-- **wifi**: wireless SSID, host MAC address, channel, encryption, signal strength, and quality as a percentage
+- **interfaces**: network interfaces and send/receive, error and dropout statistics.
+- **wifi**: wireless SSID, host MAC address, channel, encryption, signal strength, and quality as a percentage.
 
 Please refer to the [`network.json`](https://github.com/cversyx/py-monitor/blob/master/tests/network.json) test file for a detailed example.
 
-### `/network/counter/<interface>`
+### GET `/network/counter/<interface>`
 (e.g. /network/counter/wlan0)
+
 Streams a JSON representation of kB/s sent/received for the chosen interface
 
 ## Apache Configuration
