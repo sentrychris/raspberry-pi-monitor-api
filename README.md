@@ -64,3 +64,7 @@ $ sudo systemctl reload apache2
 ```
  
 A working example client can be downloaded from [here](https://github.com/cversyx/py-monitor).
+
+## License
+
+pi-monitor-api is open-sourced software licensed under the MIT license.
