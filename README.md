@@ -1,4 +1,4 @@
-# py-monitor-api
+# Raspberry Pi Monitor API
 
 A simple API for monitoring your raspberry Pi.
 
