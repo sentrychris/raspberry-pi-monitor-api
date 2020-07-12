@@ -2,6 +2,28 @@
 
 A simple API for monitoring your raspberry Pi.
 
+## Installation
+
+Clone the repository:
+```
+$ git clone git@github.com:raekw0n/raspberry-pi-monitor-api.git
+```
+
+Create the virtual environment:
+```
+$ pip virtualenv piMonitor
+```
+
+Activate the virtual environment:
+```
+$ source piMonitor/bin/activate
+```
+
+Install the project's dependencies:
+```
+$ pip install -r requirements.txt
+```
+
 ## How it Works
 
 It's incredibly simple, just submit a GET request to your chosen endpoint to receive data, which will always be returned in JSON format, then you can consume that data with whatever library/language you're using and use it to display information about your Pi.
