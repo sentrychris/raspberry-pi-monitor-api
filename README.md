@@ -1,6 +1,28 @@
-# py-monitor-api
+# Raspberry Pi Monitor API
 
 A simple API for monitoring your raspberry Pi.
+
+## Installation
+
+Clone the repository:
+```
+$ git clone git@github.com:raekw0n/raspberry-pi-monitor-api.git
+```
+
+Create the virtual environment:
+```
+$ pip virtualenv piMonitor
+```
+
+Activate the virtual environment:
+```
+$ source piMonitor/bin/activate
+```
+
+Install the project's dependencies:
+```
+$ pip install -r requirements.txt
+```
 
 ## How it Works
 
