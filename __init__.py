@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 import system
-import cooling
+#import cooling
 import network
 import wireless
 
@@ -21,10 +21,10 @@ def sysres():
     data = system.get_system_info()
     return jsonify(data=data)
 
-@app.route('/system/fan', methods=['GET'])
-def sysfan_status():
-    data = cooling.get_fan()
-    return jsonify(data=data)
+#@app.route('/system/fan', methods=['GET'])
+#def sysfan_status():
+#    data = cooling.get_fan()
+#    return jsonify(data=data)
 
 @app.route('/system/fan/set/<status>', methods=['GET'])
 def sysfan(status):
