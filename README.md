@@ -1,4 +1,4 @@
-*** UPDATE ***
+*** **UPDATE** ***
 
 A new and improved API has been released, [check it out!](https://github.com/raekw0n/raspi-mon-api)
 
