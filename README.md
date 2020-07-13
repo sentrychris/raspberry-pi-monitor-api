@@ -65,18 +65,17 @@ $ sudo apt install libapache2-mod-wsgi
 Then create and enable your new virtualhost configuration:
 
 ```conf
-<VirtualHost *>
+<VirtualHost *:80>
     ServerName api.raspberrypi.local
-
-    WSGIDaemonProcess application user=pi group=pi threads=5
-    WSGIScriptAlias / /var/www/flaskapps/pymonitorapi/pymonitorapi.wsgi
-
-    <Directory /var/www/flaskapps/pymonitorapi>
-        WSGIProcessGroup application
-        WSGIApplicationGroup %{GLOBAL}
-        Order deny,allow
-        Require all granted
+    ServerAlias www.api.raspberrypi.local
+    WSGIScriptAlias / /var/www/flaskapps/rasPiMon/raspimon.wsgi
+    <Directory /var/www/flaskapps/rasPiMon>
+            Options Indexes FollowSymLinks MultiViews
+            AllowOverride all
+            Require all granted
     </Directory>
+    ErrorLog /var/log/apache2/api.raspberrypi.local-error.log
+    CustomLog /var/log/apache2/api.raspberrypi.local-access.log combined
 </VirtualHost>
 ```
 
@@ -85,8 +84,8 @@ $ sudo a2ensite api.raspberrypi.local.conf
 $ sudo systemctl reload apache2
 ```
  
-A working example client can be downloaded from [here](https://github.com/cversyx/py-monitor).
+A working example client can be downloaded from [here](https://github.com/raekw0n/raspberry-pi-monitor).
 
 ## License
 
-pi-monitor-api is open-sourced software licensed under the MIT license.
+Raspberry Pi Monitor API is open-sourced software licensed under the MIT license.
