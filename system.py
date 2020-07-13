@@ -9,8 +9,8 @@ def get_system_info():
     info = {}
     info["cpu"] = get_cpu_info()
     info["disk"] = get_disk_info()
-    info["uptime"] = get_system_uptime()
     info["platform"] = get_platform_info()
+    info["platform"]["uptime"] = get_system_uptime()
     info["user"] = get_user()
 
     info["processes"] = []
@@ -45,23 +45,23 @@ def get_system_uptime():
     minutes = int((total_seconds % 3600) / 60)
     seconds = int(total_seconds % 60)
 
-    info["uptime"] = ""
+    uptime = ""
     if days > 0:
-        info["uptime"] += str(days) + " " + (days == 1 and "day" or "days" ) + ", "
-    if len(info["uptime"]) > 0 or hours > 0:
-        info["uptime"] += str(hours) + " " + (hours == 1 and "hour" or "hours" ) + ", "
-    if len(info["uptime"]) > 0 or minutes > 0:
-        info["uptime"] += str(minutes) + " " + (minutes == 1 and "minute" or "minutes" ) + ", "
-    info["uptime"] += str(seconds) + " " + (seconds == 1 and "second" or "seconds" )
+        uptime += str(days) + " " + (days == 1 and "day" or "days" ) + ", "
+    if len(uptime) > 0 or hours > 0:
+        uptime += str(hours) + " " + (hours == 1 and "hour" or "hours" ) + ", "
+    if len(uptime) > 0 or minutes > 0:
+        uptime += str(minutes) + " " + (minutes == 1 and "minute" or "minutes" ) + ", "
+    uptime += str(seconds) + " " + (seconds == 1 and "second" or "seconds" )
 
-    return info
+    return uptime
 
 # Get CPU usage
 def get_cpu_info():
     info = {}
-    info['usage'] = psutil.cpu_percent(interval=1)
-    info["temp"] = psutil.sensors_temperatures()['cpu-thermal'][0].current
-    info['freq'] = psutil.cpu_freq().current
+    info['usage'] = round(psutil.cpu_percent(interval=1), 2)
+    info["temp"] = round(psutil.sensors_temperatures()['cpu-thermal'][0].current, 2)
+    info['freq'] = round(psutil.cpu_freq().current, 2)
 
     return info
 
@@ -70,9 +70,9 @@ def get_disk_info():
     info = {}
     disk = psutil.disk_usage('/')
 
-    info["total"] = disk.total / (1024.0 ** 3)
-    info["used"] = disk.used / (1024.0 ** 3)
-    info["free"] = disk.free / (1024.0 ** 3)
+    info["total"] = round(disk.total / (1024.0 ** 3), 2)
+    info["used"] = round(disk.used / (1024.0 ** 3), 2)
+    info["free"] = round(disk.free / (1024.0 ** 3), 2)
     info["percent"] = disk.percent
 
     return info
