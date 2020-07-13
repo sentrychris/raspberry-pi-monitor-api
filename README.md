@@ -1,6 +1,6 @@
-# Raspberry Pi Monitor API
+# RaspiMon API
 
-A simple API for monitoring your raspberry Pi.
+A simple API for monitoring your raspberry pi.
 
 ## Installation
 
@@ -88,4 +88,4 @@ A working example client can be downloaded from [here](https://github.com/raekw0
 
 ## License
 
-Raspberry Pi Monitor API is open-sourced software licensed under the MIT license.
+RaspiMon API is open-sourced software licensed under the MIT license.
